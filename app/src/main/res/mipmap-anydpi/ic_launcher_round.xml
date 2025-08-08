@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This file combines the background and foreground for the round icon variant. -->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Points to the black background drawable. -->
     <background android:drawable="@drawable/ic_launcher_background" />
+    <!-- Points to the white icon shape drawable. -->
     <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <!-- Defines the monochrome version for themed icons (Android 13+). -->
     <monochrome android:drawable="@drawable/ic_launcher_foreground" />
 </adaptive-icon>

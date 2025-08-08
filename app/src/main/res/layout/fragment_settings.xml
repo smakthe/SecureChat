@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Profile Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Avatar Selection -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/settings_item_background"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/iv_current_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:src="@drawable/avatar_1" />
+
+            <TextView
+                android:id="@+id/tv_avatar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/avatar"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintStart_toEndOf="@id/iv_current_avatar"
+                app:layout_constraintTop_toTopOf="@id/iv_current_avatar"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_avatar" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/tap_to_change_avatar"
+                android:textSize="14sp"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toEndOf="@id/iv_current_avatar"
+                app:layout_constraintTop_toBottomOf="@id/tv_avatar_title"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_avatar"
+                app:layout_constraintBottom_toBottomOf="@id/iv_current_avatar" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_avatar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_forward_24"
+                app:tint="@color/gray_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Handle Change -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_change_handle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/settings_item_background"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/iv_handle_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_handle_24"
+                app:tint="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_handle_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/handle"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintStart_toEndOf="@id/iv_handle_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_handle_icon"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_handle" />
+
+            <TextView
+                android:id="@+id/tv_current_handle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toEndOf="@id/iv_handle_icon"
+                app:layout_constraintTop_toBottomOf="@id/tv_handle_title"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_handle"
+                app:layout_constraintBottom_toBottomOf="@id/iv_handle_icon"
+                tools:text="@currenthandle" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_handle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_forward_24"
+                app:tint="@color/gray_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Security Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/security"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 2FA Settings -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_2fa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/settings_item_background"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/iv_2fa_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_security_24"
+                app:tint="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_2fa_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/two_factor_auth"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintStart_toEndOf="@id/iv_2fa_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_2fa_icon"
+                app:layout_constraintEnd_toStartOf="@id/switch_2fa" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/two_factor_description"
+                android:textSize="14sp"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toEndOf="@id/iv_2fa_icon"
+                app:layout_constraintTop_toBottomOf="@id/tv_2fa_title"
+                app:layout_constraintEnd_toStartOf="@id/switch_2fa"
+                app:layout_constraintBottom_toBottomOf="@id/iv_2fa_icon" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_2fa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Backup Settings -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_backup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/settings_item_background"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/iv_backup_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_backup_24"
+                app:tint="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_backup_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/backup_chats"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintStart_toEndOf="@id/iv_backup_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_backup_icon"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_backup" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/backup_description"
+                android:textSize="14sp"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toEndOf="@id/iv_backup_icon"
+                app:layout_constraintTop_toBottomOf="@id/tv_backup_title"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_backup"
+                app:layout_constraintBottom_toBottomOf="@id/iv_backup_icon" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_backup"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_forward_24"
+                app:tint="@color/gray_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Application Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/application"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Theme Settings -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/settings_item_background"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/iv_theme_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_theme_24"
+                app:tint="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_theme_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/theme"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintStart_toEndOf="@id/iv_theme_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_theme_icon"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_theme" />
+
+            <TextView
+                android:id="@+id/tv_current_theme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/system_default"
+                android:textSize="14sp"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toEndOf="@id/iv_theme_icon"
+                app:layout_constraintTop_toBottomOf="@id/tv_theme_title"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_theme"
+                app:layout_constraintBottom_toBottomOf="@id/iv_theme_icon" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_theme"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_forward_24"
+                app:tint="@color/gray_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- About -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/settings_item_background"
+            android:layout_marginBottom="32dp">
+
+            <ImageView
+                android:id="@+id/iv_about_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_info_24"
+                app:tint="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_about_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/about"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintStart_toEndOf="@id/iv_about_icon"
+                app:layout_constraintTop_toTopOf="@id/iv_about_icon"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_about" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/version_info"
+                android:textSize="14sp"
+                android:textColor="@color/gray_dark"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toEndOf="@id/iv_about_icon"
+                app:layout_constraintTop_toBottomOf="@id/tv_about_title"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow_about"
+                app:layout_constraintBottom_toBottomOf="@id/iv_about_icon" />
+
+            <ImageView
+                android:id="@+id/iv_arrow_about"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_forward_24"
+                app:tint="@color/gray_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Panic Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_panic_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activate_panic_mode"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            app:backgroundTint="@color/red_panic"
+            app:cornerRadius="8dp"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            app:icon="@drawable/ic_panic_24"
+            app:iconTint="@color/white"
+            app:iconGravity="textStart" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

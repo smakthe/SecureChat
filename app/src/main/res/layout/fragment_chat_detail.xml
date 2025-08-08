@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.chat.ChatDetailFragment">
+
+    <!-- Messages RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_messages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/layout_message_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_message_received" />
+
+    <!-- Message Input Layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_message_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_light"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- File Attachment Button -->
+        <ImageButton
+            android:id="@+id/btn_attach"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_attach_file_24"
+            app:tint="@color/gray_dark"
+            app:layout_constraintBottom_toBottomOf="@id/et_message"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_message"
+            android:contentDescription="@string/attach_file" />
+
+        <!-- Message Input -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/message_input_background"
+            android:hint="@string/type_message"
+            android:maxLines="4"
+            android:minHeight="40dp"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_medium"
+            android:fontFamily="@font/roboto_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_send"
+            app:layout_constraintStart_toEndOf="@id/btn_attach"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Send Button -->
+        <ImageButton
+            android:id="@+id/btn_send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/circle_black"
+            android:src="@drawable/ic_send_24"
+            app:tint="@color/white"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="@id/et_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_message"
+            android:contentDescription="@string/send_message" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Typing Indicator -->
+    <TextView
+        android:id="@+id/tv_typing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/typing"
+        android:textColor="@color/gray_medium"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_regular"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/layout_message_input"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

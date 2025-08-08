@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">SecureChat</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">SecureChat</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Menu items -->
+    <string name="menu_chats">Chats</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_backup">Backup</string>
+    <string name="menu_logout">Logout</string>
+
+    <!-- Chat related -->
+    <string name="chat_detail">Chat</string>
+    <string name="no_chats_yet">No chats yet</string>
+    <string name="start_new_chat_hint">Tap + to start a new secure chat</string>
+    <string name="new_chat">New Chat</string>
+    <string name="type_message">Type a message...</string>
+    <string name="send_message">Send message</string>
+    <string name="attach_file">Attach file</string>
+    <string name="typing">typing...</string>
+
+    <!-- Settings -->
+    <string name="profile">Profile</string>
+    <string name="security">Security</string>
+    <string name="application">Application</string>
+    <string name="avatar">Avatar</string>
+    <string name="tap_to_change_avatar">Tap to change your avatar</string>
+    <string name="handle">Handle</string>
+    <string name="two_factor_auth">Two-Factor Authentication</string>
+    <string name="two_factor_description">Add an extra layer of security</string>
+    <string name="backup_chats">Backup Chats</string>
+    <string name="backup_description">Create encrypted local backups</string>
+    <string name="theme">Theme</string>
+    <string name="system_default">System default</string>
+    <string name="about">About</string>
+    <string name="version_info">Version 1.0.0</string>
+
+    <!-- Security -->
+    <string name="panic_button">Panic Button</string>
+    <string name="activate_panic_mode">Activate Panic Mode</string>
+    <string name="secure_status">🔒 Secure</string>
+</resources>

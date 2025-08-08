@@ -1,196 +1,101 @@
-package com.securechat.android.ui
+package com.securechat.android
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
-import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.securechat.android.R
-import com.securechat.android.SecureChatApplication
-import com.securechat.android.databinding.ActivityMainBinding
-import com.securechat.android.databinding.NavHeaderMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainViewModel by viewModels {
-        val app = application as SecureChatApplication
-        ViewModelFactory(app.appContainer.userRepository, app.appContainer.messageRepository, app.appContainer.chatRepository, app.appContainer.twoFactorAuthManager)
-    }
+    private lateinit var chatRecyclerView: RecyclerView
+    private lateinit var chatAdapter: ChatAdapter // Will create this adapter next
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setupToolbar()
-        setupNavigation()
-        setupObservers()
-        setupPanicButton()
-    }
-
-    private fun setupToolbar() {
-        setSupportActionBar(binding.appBarMain.toolbar)
-    }
-
-    private fun setupNavigation() {
-        val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-
-        appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_chats), drawerLayout
-        )
-
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            Snackbar.make(it, "Create new chat", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+            // TODO: Implement logic to create a new chat based on user handle
+        }
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val navController = findNavController(R.id.nav_host_fragment_content_main) // Placeholder for NavHostFragment if used, will adjust later
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.nav_chats, R.id.nav_settings), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        
-        // Handle menu items not in navigation
-        navView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.nav_backup -> {
-                    Snackbar.make(binding.root, "Backup feature coming soon", Snackbar.LENGTH_SHORT).show()
-                    binding.drawerLayout.closeDrawers()
-                    true
-                }
-                R.id.nav_logout -> {
-                    showLogoutConfirmation()
-                    true
-                }
-                else -> {
-                    // Let NavController handle other items
-                    navController.navigate(menuItem.itemId)
-                    binding.drawerLayout.closeDrawers()
-                    true
-                }
-            }
-        }
 
-        // Setup navigation header
-        setupNavigationHeader()
-    }
-
-    private fun setupNavigationHeader() {
-        val headerView = binding.navView.getHeaderView(0)
-        val headerBinding = NavHeaderMainBinding.bind(headerView)
-
-        viewModel.currentUser.observe(this) { user ->
-            user?.let {
-                headerBinding.tvUserHandle.text = "@${it.handle}"
-                headerBinding.imageView.setImageResource(getAvatarResource(it.avatarId))
-            }
-        }
-    }
-
-    private fun setupObservers() {
-        viewModel.panicModeActivated.observe(this) { activated ->
-            if (activated) {
-                Snackbar.make(
-                    binding.root,
-                    "Panic mode activated - all chats encrypted",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
-
-    private fun setupPanicButton() {
-        binding.appBarMain.fabPanic.setOnClickListener {
-            showPanicConfirmationDialog()
-        }
-    }
-
-    private fun showPanicConfirmationDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Activate Panic Mode?")
-            .setMessage("This will encrypt all your chat history. You'll need your password to decrypt it later.")
-            .setPositiveButton("Activate") { _, _ ->
-                showPasswordInputDialog()
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-    
-    private fun showPasswordInputDialog() {
-        val editText = EditText(this)
-        editText.hint = "Enter panic password"
-        editText.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
-        
-        AlertDialog.Builder(this)
-            .setTitle("Panic Password")
-            .setMessage("Enter a password to encrypt your chats:")
-            .setView(editText)
-            .setPositiveButton("Activate") { _, _ ->
-                val password = editText.text.toString()
-                if (password.isNotEmpty()) {
-                    viewModel.activatePanicMode(password)
-                } else {
-                    Snackbar.make(binding.root, "Password cannot be empty", Snackbar.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
-    private fun showLogoutConfirmation() {
-        AlertDialog.Builder(this)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout? You'll need to re-authenticate to access your chats.")
-            .setPositiveButton("Logout") { _, _ ->
-                // Clear user session and restart app
-                finishAffinity()
-            }
-            .setNegativeButton("Cancel") { _, _ ->
-                binding.drawerLayout.closeDrawers()
-            }
-            .show()
-    }
-    
-    private fun getAvatarResource(avatarId: Int): Int {
-        return when (avatarId) {
-            1 -> R.drawable.avatar_1
-            2 -> R.drawable.avatar_2
-            3 -> R.drawable.avatar_3
-            4 -> R.drawable.avatar_4
-            5 -> R.drawable.avatar_5
-            else -> R.drawable.avatar_1
-        }
+        // Setup RecyclerView
+        chatRecyclerView = findViewById(R.id.chatRecyclerView)
+        chatRecyclerView.layoutManager = LinearLayoutManager(this)
+        // Initialize with dummy data for now
+        val dummyChatList = listOf(
+            ChatPreview("User1", "Hello there!"),
+            ChatPreview("User2", "How are you doing?"),
+            ChatPreview("User3", "See you soon!")
+        )
+        chatAdapter = ChatAdapter(dummyChatList) // Initialize adapter
+        chatRecyclerView.adapter = chatAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> {
-                // Navigate to search or show search dialog
-                Snackbar.make(binding.root, "Search functionality coming soon", Snackbar.LENGTH_SHORT).show()
-                true
-            }
-            R.id.action_settings -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_settings)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+}
+
+// Dummy data class for chat preview
+data class ChatPreview(val handle: String, val lastMessage: String)
+
+// Dummy Adapter for RecyclerView
+class ChatAdapter(private val chatList: List<ChatPreview>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+
+    class ChatViewHolder(view: android.view.View) : RecyclerView.ViewHolder(view) {
+        val handleTextView: android.widget.TextView = view.findViewById(R.id.textView_chat_handle)
+        val lastMessageTextView: android.widget.TextView = view.findViewById(R.id.textView_last_message_preview)
+        val avatarImageView: android.widget.ImageView = view.findViewById(R.id.imageView_chat_avatar)
+    }
+
+    override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): ChatViewHolder {
+        val view = android.view.LayoutInflater.from(parent.context).inflate(R.layout.item_chat_preview, parent, false)
+        return ChatViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
+        val chat = chatList[position]
+        holder.handleTextView.text = chat.handle
+        holder.lastMessageTextView.text = chat.lastMessage
+        // Set avatar image (dummy for now)
+        holder.avatarImageView.setImageResource(android.R.drawable.sym_def_app_icon)
+    }
+
+    override fun getItemCount(): Int {
+        return chatList.size
     }
 }

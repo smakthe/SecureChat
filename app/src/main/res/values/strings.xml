@@ -22,6 +22,8 @@
     <string name="send_message">Send message</string>
     <string name="attach_file">Attach file</string>
     <string name="typing">typing...</string>
+    <string name="example_chat_handle">Example Handle</string>
+    <string name="example_last_message">This is an example of a last message preview to see how it looks.</string>
 
     <!-- Settings -->
     <string name="profile">Profile</string>
